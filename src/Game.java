@@ -1,10 +1,48 @@
 import javax.swing.*;
+import java.awt.*;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
 public class Game extends JPanel{
+    Maze labyrinth = new Maze();
+    Character character = new Character();
+    public static int level=1;
+
     public Game(){
+        addKeyListener(new KeyListener() {
+            @Override
+            public void keyTyped(KeyEvent e) {
+
+            }
+
+            @Override
+            public void keyPressed(KeyEvent e) {
+                character.keyPressed(e);
+            }
+
+            @Override
+            public void keyReleased(KeyEvent e) {
+
+            }
+        });
+            setFocusable(true);
     }
+
+    public void paint(Graphics graphic){
+        labyrinth.paint(graphic);
+        character.paint(graphic);
+    }
+
+    public static int changeLevel(){
+        return level++;
+    }
+
+    public static int getLevel(){
+        return level;
+    }
+
 
     public static void main(String[] args) {
         JOptionPane.showMessageDialog(null, "¿Are you ready?");
@@ -23,8 +61,11 @@ public class Game extends JPanel{
                 Logger.getLogger(Game.class.getName()).log(Level.SEVERE, null, ex);
             }
             game.repaint();
+
+            if(getLevel()>3){
+                JOptionPane.showMessageDialog(null, "Bye Bye");
+                System.exit(0);
+            }
         }
-
-
     }
 }
